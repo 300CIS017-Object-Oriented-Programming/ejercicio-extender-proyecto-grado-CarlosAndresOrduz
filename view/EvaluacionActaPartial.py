@@ -10,7 +10,7 @@ from controller.ControladorPDF import ControladorPdf
 def agregar_acta(st, controlador):
     st.title("Generación De Actas")
     col1, col2, col3 = st.columns(3)
-    col5, col6, col7, col8 = st.columns(4)
+    col5, col6, col7, col8, col9, col10, col11 = st.columns(7)
     # Objeto que modelará el formulario
     info_acta_obj = InfoActa(controlador.criterios)
     info_acta_obj.fecha_acta = datetime.today().strftime('%Y-%m-%d')
@@ -21,7 +21,7 @@ def agregar_acta(st, controlador):
     with col3:
         info_acta_obj.tipo_trabajo = st.selectbox('Tipo', ('Aplicado', 'Investigación'))
     with col5:
-        info_acta_obj.director = st.text_input("Director")
+        info_acta_obj.director = st.selectbox("Director", ("Luisa Fernanda Rincon", "Juan Carlos Martinez", "Maria Constanza Pabón", "Gloria Inés Álvarez", "Gerardo M Sarria M", "Luis Eduardo Tobón", "Juan Pablo García", "Frank Martinez", "Carlos Ramirez"))
     with col6:
         info_acta_obj.codirector = st.text_input("Codirector", "N.A")
     with col7:
@@ -29,6 +29,13 @@ def agregar_acta(st, controlador):
     with col8:
         info_acta_obj.jurado2 = st.text_input("Jurado #2")
     enviado_btn = st.button("Enviar")
+    with col9:
+        info_acta_obj.fecha = st.text_input("Fecha")
+    with col10:
+        info_acta_obj.jurado1Estado = st.checkbox("Jurado 1 externo")
+    with col11:
+        info_acta_obj.jurado2Estado = st.checkbox("Jurado 2 externo")
+
 
     # Cuando se oprime el botón se agrega a la lista
     if enviado_btn and info_acta_obj.autor != "" and info_acta_obj.nombre_trabajo != "" and info_acta_obj.director != "" \
@@ -114,6 +121,8 @@ def evaluar_criterios(st, controlador):
                 nota_jurado2 = st.number_input(str(num) + ". Nota Jurado 2", 0.0, 5.0)
                 criterio.nota = ((nota_jurado1 + nota_jurado2) / 2) * criterio.porcentaje
                 criterio.observacion = st.text_input(str(num) + ". Observación", "Sin Comentarios.")
+                criterio.observacionAdicional = st.text_input(str(num) + ". Observaciones adicionales", "Sin Comentarios.")
+                criterio.restricciones = st.text_input(str(num) + ". Restricciones", "Sin Comentarios.")
                 temp += criterio.nota
                 num += 1
             if temp > 3.5:

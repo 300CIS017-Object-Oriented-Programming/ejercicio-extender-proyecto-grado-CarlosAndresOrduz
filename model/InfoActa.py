@@ -23,3 +23,6 @@ class InfoActa:
         self.nota_final = 0.0
         self.criterios = criterios
         self.estado = False
+        self.fecha = 0
+        self.jurado1Estado = "Interno"
+        self.jurado2Estado = "Interno"
